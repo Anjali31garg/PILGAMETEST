@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Auth App
 
-## Getting Started
+## Requirements
 
-First, run the development server:
+- Node.js
+- PostgreSQL
+
+## Setup
+
+1. Clone the repository:
 
 ```bash
+git clone https://github.com/Anjali31garg/PILGAMETEST.git
+cd nextjs-auth-app
+
+2.Install dependencies:
+
+npm install
+
+3. Set up the PostgreSQL database and update lib/db.js with your credentials.
+
+Run the following SQL command to create the users table:
+
+sql
+1. create a database to store data of users.
+
+CREATE DATABASE nextjs_auth_app;
+
+
+2. create a table inside database
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  password VARCHAR(100)
+);
+
+3 In your Next.js project, you need to set up the database connection in a lib/db.js file. Here is the complete db.js file:
+
+import { Pool } from 'pg';
+
+const pool = new Pool({
+  user: 'your_db_user',
+  host: 'localhost',
+  database: 'nextjs_auth_app',
+  password: 'your_db_password',
+  port: 5432,
+});
+
+export default pool;
+Replace 'your_db_user', 'your_db_password', and 'nextjs_auth_app' with your PostgreSQL user, password, and database name, respectively.
+
+
+4. Run development  server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open http://localhost:3000 to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+USAGE
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+. Register a new user at http://localhost:3000/register
+.Login at `/login`
+.Upon successful login the users name will be displayed
